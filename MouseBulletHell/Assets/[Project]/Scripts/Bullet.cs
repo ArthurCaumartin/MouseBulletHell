@@ -5,9 +5,9 @@ public class Bullet : MonoBehaviour
     private Transform _playerTransform;
     private float _speed = 10f;
 
-    public Bullet Initialize(Transform player, float speed)
+    public Bullet Initialize(Transform targetTransform, float speed)
     {
-        _playerTransform = player;
+        _playerTransform = targetTransform;
         _speed = speed;
         transform.right = (_playerTransform.position - transform.position).normalized;
         return this;

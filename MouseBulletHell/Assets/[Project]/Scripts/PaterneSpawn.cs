@@ -1,9 +1,11 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PaterneSpawn : MonoBehaviour
 {
     [SerializeField] private Transform _playerTransform;
-    [SerializeField] private Bullet _bulletPrefab;
+    [SerializeField] private GameObject _bulletPrefab;
+    [SerializeField] private GameObject _laserPrefab;
     [SerializeField] private float _spawnPerSecond = 1.5f;
     [SerializeField] private float _bulletSpeed = 1.5f;
     private float _spawnTime = 0;
@@ -20,14 +22,27 @@ public class PaterneSpawn : MonoBehaviour
         if (_spawnTime >= 1 / _spawnPerSecond)
         {
             _spawnTime = 0;
-            Spawn();
+            SpawnElement(Random.value > .5f ? _bulletPrefab : _laserPrefab);
         }
     }
 
-    private void Spawn()
+    private void SpawnElement(GameObject element)
     {
-        Bullet newBullet = Instantiate(_bulletPrefab, GetRandomPosAroundCamera(), Quaternion.identity);
-        Destroy(newBullet.Initialize(_playerTransform, _bulletSpeed), 10f);
+        Bullet bullet = element.GetComponent<Bullet>();
+        if (bullet)
+        {
+            Bullet newBullet = Instantiate(bullet, GetRandomPosAroundCamera(), Quaternion.identity);
+            Destroy(newBullet.Initialize(_playerTransform, _bulletSpeed).gameObject, 10f);
+            return;
+        }
+
+        Laser laser = element.GetComponent<Laser>();
+        if (laser)
+        {
+            Laser newLaser = Instantiate(laser, GetRandomPosAroundCamera(), Quaternion.identity);
+            newLaser.Initialize(_playerTransform, _bulletSpeed);
+            return;
+        }
     }
 
     private Vector2 GetRandomPosAroundCamera()

@@ -29,7 +29,6 @@ public class BallControler : MonoBehaviour
                                             , 1 / _positifSpeed);
 
         _negatifBall.position = Vector2.Lerp(_negatifBall.position, (-_positifBall.position).normalized * 15, Time.deltaTime * _negatifSpeed);
-
     }
 
     private void OnMousePosition(InputValue value)
