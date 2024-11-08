@@ -9,7 +9,7 @@ public class Laser : MonoBehaviour
     [SerializeField] private Gradient _offColorGradient;
     [SerializeField] private Gradient _onColorGradient;
 
-    [SerializeField] private Transform _target;
+    private Transform _target;
     private float _speed = 5;
     private LineRenderer _lineRenderer;
     private float _lifeTime = 0;

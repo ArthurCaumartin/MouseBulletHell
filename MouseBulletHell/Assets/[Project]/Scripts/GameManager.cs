@@ -21,6 +21,8 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        Score += 10;
+
         if (instance) Destroy(gameObject);
         instance = this;
     }
@@ -35,4 +37,9 @@ public class GameManager : MonoBehaviour
         Score -= _scoreToLoseOnHit;
         _onPlayerHit.Invoke();
     }
+
+
+
+
+    
 }

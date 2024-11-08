@@ -6,6 +6,7 @@ public class PaterneSpawn : MonoBehaviour
     [SerializeField] private Transform _playerTransform;
     [SerializeField] private GameObject _bulletPrefab;
     [SerializeField] private GameObject _laserPrefab;
+    [SerializeField] private float _laserSpawnChance = .2f;
     [SerializeField] private float _spawnPerSecond = 1.5f;
     [SerializeField] private float _bulletSpeed = 1.5f;
     private float _spawnTime = 0;
@@ -22,7 +23,7 @@ public class PaterneSpawn : MonoBehaviour
         if (_spawnTime >= 1 / _spawnPerSecond)
         {
             _spawnTime = 0;
-            SpawnElement(Random.value > .5f ? _bulletPrefab : _laserPrefab);
+            SpawnElement(Random.value < _laserSpawnChance ? _laserPrefab : _bulletPrefab);
         }
     }
 
