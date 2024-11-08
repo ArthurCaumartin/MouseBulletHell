@@ -621,6 +621,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1114174787}
   m_CullTransparentMesh: 1
+--- !u!4 &1534501916 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8452144534669988598, guid: cc708bd8763ec414885691a2a11d578d, type: 3}
+  m_PrefabInstance: {fileID: 1907281403}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1789494655
 GameObject:
   m_ObjectHideFlags: 0
@@ -1090,11 +1095,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16e3753447c01d2408d8c99ddbde81a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerTransform: {fileID: 166412910}
+  _positifBallTransform: {fileID: 166412910}
+  _negatifBallTransform: {fileID: 1534501916}
   _bulletPrefab: {fileID: 1360800265206970974, guid: 03233cebf3520ca40b059e5aba4df144, type: 3}
-  _laserPrefab: {fileID: 6092442260118278439, guid: 0ed86c187f5c563469e87f8ff0c65a5b, type: 3}
-  _laserSpawnChance: 0.1
-  _spawnPerSecond: 1.5
+  _zonePrefab: {fileID: 6092442260118278439, guid: 0ed86c187f5c563469e87f8ff0c65a5b, type: 3}
+  _zoneSpawnChance: 0.2
+  _spawnPerSecond: 5
   _bulletSpeed: 40
 --- !u!114 &1963225076
 MonoBehaviour:

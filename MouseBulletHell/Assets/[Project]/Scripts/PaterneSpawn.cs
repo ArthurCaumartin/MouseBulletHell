@@ -3,10 +3,11 @@ using UnityEngine;
 
 public class PaterneSpawn : MonoBehaviour
 {
-    [SerializeField] private Transform _playerTransform;
+    [SerializeField] private Transform _positifBallTransform;
+    [SerializeField] private Transform _negatifBallTransform;
     [SerializeField] private GameObject _bulletPrefab;
-    [SerializeField] private GameObject _laserPrefab;
-    [SerializeField] private float _laserSpawnChance = .2f;
+    [SerializeField] private GameObject _zonePrefab;
+    [SerializeField] private float _zoneSpawnChance = .2f;
     [SerializeField] private float _spawnPerSecond = 1.5f;
     [SerializeField] private float _bulletSpeed = 1.5f;
     private float _spawnTime = 0;
@@ -23,7 +24,7 @@ public class PaterneSpawn : MonoBehaviour
         if (_spawnTime >= 1 / _spawnPerSecond)
         {
             _spawnTime = 0;
-            SpawnElement(Random.value < _laserSpawnChance ? _laserPrefab : _bulletPrefab);
+            SpawnElement(Random.value < _zoneSpawnChance ? _zonePrefab : _bulletPrefab);
         }
     }
 
@@ -33,15 +34,16 @@ public class PaterneSpawn : MonoBehaviour
         if (bullet)
         {
             Bullet newBullet = Instantiate(bullet, GetRandomPosAroundCamera(), Quaternion.identity);
-            Destroy(newBullet.Initialize(_playerTransform, _bulletSpeed).gameObject, 10f);
+            Destroy(newBullet.Initialize(_positifBallTransform, _bulletSpeed).gameObject, 10f);
             return;
         }
 
-        Laser laser = element.GetComponent<Laser>();
-        if (laser)
+        Zone zone = element.GetComponent<Zone>();
+        if (zone)
         {
-            Laser newLaser = Instantiate(laser, GetRandomPosAroundCamera(), Quaternion.identity);
-            newLaser.Initialize(_playerTransform, _bulletSpeed);
+            Vector2 spawnPoint = Random.value > .5f ? _positifBallTransform.position : _negatifBallTransform.position;
+            Zone newZone = Instantiate(zone, spawnPoint, Quaternion.identity);
+            newZone.Initialize(_bulletSpeed);
             return;
         }
     }
