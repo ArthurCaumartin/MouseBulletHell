@@ -6,6 +6,7 @@ public class BallControler : MonoBehaviour
     [SerializeField] private Transform _positifBall;
     [SerializeField] private Transform _negatifBall;
     [Space]
+    [SerializeField] private float _maxPositifDistance = 1.5f;
     [SerializeField] private float _dashCooldown = 1.5f;
     [SerializeField] private float _positifSpeed = 15;
     [SerializeField] private float _negatifSpeed = 15;
@@ -13,18 +14,31 @@ public class BallControler : MonoBehaviour
     private Vector2 _velocity;
     private Camera _camera;
     private float _dashCooldownTime;
+    private FakeCursor _fakeCursor;
+    Vector2 _posififPosTarget;
 
     private void Start()
     {
         _camera = Camera.main;
+        _fakeCursor = GetComponent<FakeCursor>();
+        _posififPosTarget = Vector2.zero;
     }
 
     private void Update()
     {
         _dashCooldownTime += Time.deltaTime;
 
+        if ((_posififPosTarget + _worldMousePos * Time.deltaTime * 3.5f).magnitude < _maxPositifDistance)
+            _posififPosTarget += _worldMousePos * Time.deltaTime * 3.5f;
+
+        Vector2 target = _posififPosTarget;
+        if (Vector2.Distance(Vector2.zero, _posififPosTarget) > _maxPositifDistance)
+        {
+            target = _posififPosTarget.normalized * _maxPositifDistance;
+        }
+
         _positifBall.position = Vector2.SmoothDamp(_positifBall.position
-                                            , _camera.ScreenToWorldPoint(_worldMousePos)
+                                            , target
                                             , ref _velocity
                                             , 1 / _positifSpeed);
 
@@ -48,7 +62,8 @@ public class BallControler : MonoBehaviour
         if (_dashCooldownTime >= _dashCooldown)
         {
             _dashCooldownTime = 0;
-            Mouse.current.WarpCursorPosition(_camera.WorldToScreenPoint(_negatifBall.position));
+            // Mouse.current.WarpCursorPosition(_camera.WorldToScreenPoint(_negatifBall.position));
+            _posififPosTarget = _negatifBall.position;
             GameManager.instance.Score += 10;
         }
     }

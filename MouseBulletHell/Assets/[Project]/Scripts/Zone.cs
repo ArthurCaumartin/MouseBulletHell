@@ -25,7 +25,7 @@ public class Zone : MonoBehaviour
 
     private void Update()
     {
-        _lifeTime += Time.deltaTime * _speed * _speedFactor;
+        _lifeTime += Time.deltaTime * _speed * .01f;
         SetColor(_lifeTime);
         SetScale(_lifeTime);
         if (_lifeTime > 1)

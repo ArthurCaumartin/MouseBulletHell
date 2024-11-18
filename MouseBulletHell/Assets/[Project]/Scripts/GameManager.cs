@@ -3,6 +3,7 @@ using UnityEngine.Events;
 
 public class GameManager : MonoBehaviour
 {
+    //! definire un global game speed et voila
     public static GameManager instance;
     [SerializeField] private float _currentScore;
     [SerializeField] private float _scoreToLoseOnHit = 50;
@@ -30,6 +31,9 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         Score = 0;
+
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     public void OnPlayerHit()
@@ -37,9 +41,4 @@ public class GameManager : MonoBehaviour
         Score -= _scoreToLoseOnHit;
         _onPlayerHit.Invoke();
     }
-
-
-
-
-    
 }
